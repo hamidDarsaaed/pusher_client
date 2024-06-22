@@ -7,7 +7,6 @@ import 'package:pusher_client/src/contracts/stream_handler.dart';
 import 'package:pusher_client/src/models/connection_error.dart';
 import 'package:pusher_client/src/models/connection_state_change.dart';
 import 'package:pusher_client/src/models/event_stream_result.dart';
-import 'package:pusher_client/src/pusher/channel.dart';
 
 part 'pusher_client.g.dart';
 
@@ -18,7 +17,7 @@ part 'pusher_client.g.dart';
 /// `connect()` at a later point.
 class PusherClient extends StreamHandler {
   static const MethodChannel _channel =
-      const MethodChannel('com.github.chinloyal/pusher_client');
+       MethodChannel('com.github.chinloyal/pusher_client');
   static const classId = 'PusherClient';
 
   static PusherClient? _singleton;
@@ -62,8 +61,8 @@ class PusherClient extends StreamHandler {
       'init',
       jsonEncode({
         'appKey': appKey,
-        'pusherOptions': options,
-        'initArgs': initArgs,
+        'pusherOptions': options.toJson(),
+        'initArgs': initArgs.toJson(),
       }),
     );
   }

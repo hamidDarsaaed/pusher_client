@@ -21,7 +21,7 @@ PusherOptions _$PusherOptionsFromJson(Map<String, dynamic> json) {
 
 Map<String, dynamic> _$PusherOptionsToJson(PusherOptions instance) =>
     <String, dynamic>{
-      'auth': instance.auth,
+      'auth': instance.auth?.toJson(),
       'cluster': instance.cluster,
       'host': instance.host,
       'encrypted': instance.encrypted,

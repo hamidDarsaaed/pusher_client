@@ -8,11 +8,10 @@ import 'package:pusher_client/src/pusher/pusher_event.dart';
 
 class Channel extends StreamHandler {
   static const MethodChannel _mChannel =
-      const MethodChannel('com.github.chinloyal/pusher_client');
+       MethodChannel('com.github.chinloyal/pusher_client');
   static const classId = 'Channel';
 
-  static Map<String, void Function(PusherEvent?)> _eventCallbacks =
-      Map<String, void Function(PusherEvent?)>();
+  static Map<String, void Function(PusherEvent?)> _eventCallbacks = Map<String, void Function(PusherEvent?)>();
 
   final String name;
 
@@ -34,10 +33,10 @@ class Channel extends StreamHandler {
     void Function(PusherEvent? event) onEvent,
   ) async {
     registerListener(classId, _eventHandler);
-    _eventCallbacks[this.name + eventName] = onEvent;
+    _eventCallbacks[name + eventName] = onEvent;
 
     await _mChannel.invokeMethod('bind', {
-      'channelName': this.name,
+      'channelName': name,
       'eventName': eventName,
     });
   }
@@ -45,10 +44,10 @@ class Channel extends StreamHandler {
   /// Unbinds the callback from the given [eventName], in the scope
   /// of the channel being acted upon
   Future<void> unbind(String eventName) async {
-    _eventCallbacks.remove(this.name + eventName);
+    _eventCallbacks.remove(name + eventName);
 
     await _mChannel.invokeMethod('unbind', {
-      'channelName': this.name,
+      'channelName': name,
       'eventName': eventName,
     });
   }
@@ -70,7 +69,7 @@ class Channel extends StreamHandler {
       jsonEncode({
         'eventName': eventName,
         'data': data.toString(),
-        'channelName': this.name,
+        'channelName': name,
       }),
     );
   }
